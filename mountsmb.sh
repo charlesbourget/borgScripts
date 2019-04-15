@@ -7,6 +7,11 @@ read -p "Enter samba share name (ex: share) : " share
 echo "The share will be mounted in /mnt"
 echo "Mounting $address/$share as $username..."
 
-sudo mount -t cifs -o username=$username "//$address/$share" /mnt
+sudo mount -t cifs -o username=$username "//$address/$share" /mnt/
 
-echo "$share is mounted!"
+if [ $? -eq 0 ]
+then
+    echo "$share is mounted!"
+else
+    echo "Mounting failed..."
+fi
