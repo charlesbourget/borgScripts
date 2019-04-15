@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 read -p "Enter user to mount samba share as : " username
 read -p "Enter samba share address (ex: 192.168.0.119) : " address
 read -p "Enter samba share name (ex: share) : " share
