@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Get current date
-date="$(date +'%Y/%m/%d')"
+date="$(date +'%Y-%m-%d')"
 
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
