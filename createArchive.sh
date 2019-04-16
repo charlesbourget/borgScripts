@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 #Get current date
-date="$(date +'%Y-%m-%d')"
+DATE="$(date +'%Y-%m-%d')"
 
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 #Check if the archive name is correct
-echo "The archive will be named : $date"
+echo "The archive will be named : $DATE"
 read -p "Is the name ok?[yN] " answer
 if [ $answer = 'n' ]
 then
     read -p "Enter name for new archive : " name
 elif [ $answer = 'y' ]
 then
-    name=$date
+    name=$DATE
 else
     echo "The answer was not y or n"
     exit 1
@@ -27,7 +27,7 @@ then
 fi
 
 #Check if an archive with the same name already exist in the repository
-expression=$(sudo borg list /mnt/backup | grep $date)
+expression=$(sudo borg list /mnt/backup | grep $name)
 
 if [ -n "$expression" ]
 then
