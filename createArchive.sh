@@ -3,8 +3,6 @@
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
 
-STARTTIME="$(date +%s)"
-
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 #Check if the archive name is correct
@@ -42,9 +40,14 @@ fi
 #Create the archive
 echo "Creating archive..."
 
+#Get current time in seconds since UNIX EPOCH
+STARTTIME="$(date +%s)"
+
 sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 
+#Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
 
 echo "Backup successfull!"
+#Calculate elasped time since start
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
