@@ -2,4 +2,4 @@
 
 echo "Unmounting /mnt ..."
 
-sudo umount /mnt
+sudo umount /mnt/smb
