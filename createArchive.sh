@@ -40,4 +40,4 @@ fi
 #Create the archive
 echo "Creating archive..."
 
-#sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
