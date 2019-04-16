@@ -26,7 +26,18 @@ then
     exit 1
 fi
 
+#Check if an archive with the same name already exist in the repository
+expression=$(sudo borg list /mnt/backup | grep $date)
+
+if [ -n "$expression" ]
+then
+    echo "An archive with this name already exist"
+    exit 1
+else
+    echo "Archive name is unused and valid"
+fi
+
 #Create the archive
 echo "Creating archive..."
 
-sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+#sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
