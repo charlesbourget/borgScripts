@@ -20,7 +20,7 @@ else
 fi
 
 #Check if the share is mounted on /mnt/
-if [ ! -d /mnt/smb/backup ]
+if [ ! -d /mnt/backup ]
 then
     echo "The backup repo which is supposed to be on /mnt/backup does not exist."
     exit 1
@@ -43,7 +43,7 @@ echo "Creating archive..."
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-sudo borg create --progress /mnt/smb/backup::$name ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
