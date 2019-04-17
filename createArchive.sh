@@ -14,7 +14,7 @@ then
 
     if [ $answer = 'n' ]
     then
-        echo "Backup can\'t be executed without a mounted share..."
+        echo "Backup can't be executed without a mounted share..."
         exit 1
     elif [ $answer = 'y' ]
     then
@@ -64,7 +64,7 @@ echo "Creating archive..."
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+#sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
@@ -72,3 +72,10 @@ ENDTIME="$(date +%s)"
 echo "Backup successfull!"
 #Calculate elasped time since start
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
+
+read -p "Do you want to unmount the samba share? [yN] " answer
+
+if [ $answer = 'y' ]
+then
+    ./unmountsmb.sh
+fi
