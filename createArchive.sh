@@ -64,7 +64,7 @@ echo "Creating archive..."
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-#sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
