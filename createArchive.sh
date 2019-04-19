@@ -62,11 +62,12 @@ fi
 
 #Create the archive
 echo "Creating archive..."
+echo
 
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-#sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
@@ -74,6 +75,7 @@ ENDTIME="$(date +%s)"
 echo "Backup successfull!"
 #Calculate elasped time since start
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
+echo
 
 read -p "Do you want to unmount the samba share? [yN] " answer
 
