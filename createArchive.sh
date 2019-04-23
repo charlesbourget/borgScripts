@@ -110,6 +110,7 @@ echo "Backup successful!"
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
 echo
 
+#Check if a samba share is mounted
 if [[ ${path} = "/mnt/backup" ]]
 then
     #Ask if the user want to unmount the samba share
