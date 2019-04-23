@@ -3,8 +3,18 @@
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
 
+function question {
+    echo $1
+    select answer in "Yes" "No"; do
+        case $answer in
+            Yes ) return 0; break;;
+            No ) return 1;
+        esac
+    done
+}
+
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
-echo
+question "This is a question..."
 
 #Check if the share is mounted on /mnt/
 if [ ! -d /mnt/backup ]
