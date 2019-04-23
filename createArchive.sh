@@ -18,32 +18,50 @@ function question {
 
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
-#Check if the share is mounted on /mnt/
-if [[ ! -d /mnt/backup ]]
+question "Is the backup to a samba share or a local drive? Yes = Samba share, No = Local drive"
+answer=$?
+
+if [[ ${answer} = 1 ]]
 then
-    echo -e "\e[31mThe backup repo which is supposed to be on /mnt/backup does not exist."
-    echo -e "\e[39mThis is caused by the share not being mounted or because the repo doesn't exist"
-    question "Do you want to mount a samba share?"
-    answer=$?
+    read -p "Enter path to repo on local disk. " path
 
-    if [[ ${answer} = 1 ]]
+    #Check if path exist
+    if [[ ! -d ${path} ]]
     then
-        echo -e "\e[31mBackup can't be executed without a mounted share..."
+        echo "The repo specified does not exist"
         exit 1
-    elif [[ ${answer} = 0 ]]
-    then
-        #Calls script to mount samba share
-        ./mountsmb.sh
+    fi
 
-        #Check if the operation was successfull
-        if [[ ! -d /mnt/backup ]]
+elif [[ ${answer} = 0 ]]
+then
+    path="/mnt/backup"
+    #Check if the share is mounted on /mnt/
+    if [[ ! -d ${path} ]]
+    then
+        echo -e "\e[31mThe backup repo which is supposed to be on /mnt/backup does not exist."
+        echo -e "\e[39mThis is caused by the share not being mounted or because the repo doesn't exist"
+        question "Do you want to mount a samba share?"
+        answer=$?
+
+        if [[ ${answer} = 1 ]]
         then
-            echo -e "\e[31mShare is still not mounted or repo doesn't exist"
+            echo -e "\e[31mBackup can't be executed without a mounted share..."
+            exit 1
+        elif [[ ${answer} = 0 ]]
+        then
+            #Calls script to mount samba share
+            ./mountsmb.sh
+
+            #Check if the operation was successfull
+            if [[ ! -d ${path} ]]
+            then
+                echo -e "\e[31mShare is still not mounted or repo doesn't exist"
+                exit 1
+            fi
+        else
+            echo -e "\e[31mThe answer was not y or n"
             exit 1
         fi
-    else
-        echo -e "\e[31mThe answer was not y or n"
-        exit 1
     fi
 fi
 
@@ -64,7 +82,7 @@ else
 fi
 
 #Check if an archive with the same name already exist in the repository
-expression=$(sudo borg list /mnt/backup | grep -w $name)
+expression=$(sudo borg list ${path} | grep -w ${name})
 
 if [[ -n "$expression" ]]
 then
@@ -81,7 +99,7 @@ echo
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress ${path}::${name} ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
