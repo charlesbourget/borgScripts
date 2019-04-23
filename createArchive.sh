@@ -110,10 +110,14 @@ echo "Backup successful!"
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
 echo
 
-question "Do you want to unmount the samba share?"
-answer=$?
-
-if [[ ${answer} = 0 ]]
+if [[ ${path} = "/mnt/backup" ]]
 then
-    ./unmountsmb.sh
+    #Ask if the user want to unmount the samba share
+    question "Do you want to unmount the samba share?"
+    answer=$?
+
+    if [[ ${answer} = 0 ]]
+    then
+        ./unmountsmb.sh
+    fi
 fi
