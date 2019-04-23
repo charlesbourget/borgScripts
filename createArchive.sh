@@ -19,24 +19,24 @@ function question {
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 #Check if the share is mounted on /mnt/
-if [ ! -d /mnt/backup ]
+if [[ ! -d /mnt/backup ]]
 then
     echo -e "\e[31mThe backup repo which is supposed to be on /mnt/backup does not exist."
     echo -e "\e[39mThis is caused by the share not being mounted or because the repo doesn't exist"
     question "Do you want to mount a samba share?"
     answer=$?
 
-    if [[ $answer = 1 ]]
+    if [[ ${answer} = 1 ]]
     then
         echo -e "\e[31mBackup can't be executed without a mounted share..."
         exit 1
-    elif [[ $answer = 0 ]]
+    elif [[ ${answer} = 0 ]]
     then
         #Calls script to mount samba share
         ./mountsmb.sh
 
         #Check if the operation was successfull
-        if [ ! -d /mnt/backup ]
+        if [[ ! -d /mnt/backup ]]
         then
             echo -e "\e[31mShare is still not mounted or repo doesn't exist"
             exit 1
@@ -52,12 +52,12 @@ echo "The archive will be named : $DATE"
 question "Is the name ok?"
 answer=$?
 
-if [[ $answer = 1 ]]
+if [[ ${answer} = 1 ]]
 then
     read -p "Enter name for new archive : " name
-elif [[ $answer = 0 ]]
+elif [[ ${answer} = 0 ]]
 then
-    name=$DATE
+    name=${DATE}
 else
     echo -e "\e[31mThe answer was not y or n"
     exit 1
@@ -86,15 +86,16 @@ sudo borg create --progress /mnt/backup::$name ~/Documents ~/Pictures ~/Videos
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
 
-echo "Backup successfull!"
-#Calculate elasped time since start
+echo "Backup successful!"
+
+#Calculate elapsed time since start
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
 echo
 
 question "Do you want to unmount the samba share?"
 answer=$?
 
-if [[ $answer = 0 ]]
+if [[ ${answer} = 0 ]]
 then
     ./unmountsmb.sh
 fi
