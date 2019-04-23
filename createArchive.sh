@@ -3,6 +3,9 @@
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
 
+#Ask a Yes/No question to the user
+#Return 0 if the answer is Yes
+#Return 1 if the answer is No
 function question {
     echo $1
     select answer in "Yes" "No"; do
@@ -14,20 +17,20 @@ function question {
 }
 
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
-question "This is a question..."
 
 #Check if the share is mounted on /mnt/
 if [ ! -d /mnt/backup ]
 then
     echo -e "\e[31mThe backup repo which is supposed to be on /mnt/backup does not exist."
     echo -e "\e[39mThis is caused by the share not being mounted or because the repo doesn't exist"
-    read -p "Do you want to mount a samba share?[yN] " answer
+    question "Do you want to mount a samba share?"
+    answer=$?
 
-    if [[ $answer = 'n' ]]
+    if [[ $answer = 1 ]]
     then
         echo -e "\e[31mBackup can't be executed without a mounted share..."
         exit 1
-    elif [[ $answer = 'y' ]]
+    elif [[ $answer = 0 ]]
     then
         #Calls script to mount samba share
         ./mountsmb.sh
@@ -46,12 +49,13 @@ fi
 
 #Check if the archive name is correct
 echo "The archive will be named : $DATE"
-read -p "Is the name ok?[yN] " answer
-echo
-if [[ $answer = 'n' ]]
+question "Is the name ok?"
+answer=$?
+
+if [[ $answer = 1 ]]
 then
     read -p "Enter name for new archive : " name
-elif [[ $answer = 'y' ]]
+elif [[ $answer = 0 ]]
 then
     name=$DATE
 else
@@ -87,9 +91,10 @@ echo "Backup successfull!"
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
 echo
 
-read -p "Do you want to unmount the samba share? [yN] " answer
+question "Do you want to unmount the samba share?"
+answer=$?
 
-if [[ $answer = 'y' ]]
+if [[ $answer = 0 ]]
 then
     ./unmountsmb.sh
 fi
