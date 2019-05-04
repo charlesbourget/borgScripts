@@ -16,6 +16,7 @@ function question {
     done
 }
 
+#Default is to back up all three directory
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 echo "Is the backup to a samba share or a local drive?"
