@@ -9,7 +9,7 @@ DATE="$(date +'%Y-%m-%d')"
 function question {
     echo $1
     select answer in "Yes" "No"; do
-        case $answer in
+        case ${answer} in
             Yes ) return 0; break;;
             No ) return 1;
         esac
@@ -19,7 +19,7 @@ function question {
 echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 question "Is the backup to a samba share or a local drive? Yes = Samba share, No = Local drive"
-answer=$?
+answer=${?}
 
 if [[ ${answer} = 1 ]]
 then
