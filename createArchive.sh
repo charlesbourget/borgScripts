@@ -82,10 +82,6 @@ then
 elif [[ ${answer} = 0 ]]
 then
     name=${DATE}
-else
-    echo -e "\e[31mThe answer was not y or n"
-    exit 1
-fi
 
 #Check if an archive with the same name already exist in the repository
 expression=$(sudo borg list ${path} | grep -w ${name})
