@@ -21,13 +21,17 @@ echo "Creating an archive from ~/Documents, ~/Pictures and ~/Videos"
 
 echo "Is the backup to a samba share or a local drive?"
 select answer in "Samba" "Local"; do
-        case $answer in
-            Samba ) answer=0; break;;
-            Local ) answer=1;
-        esac
-    done
+    case $answer in
+       "Samba" )
+            response=0
+            break;;
+        "Local" )
+            response=1
+            break;;
+    esac
+done
 
-if [[ ${answer} = 1 ]]
+if [[ ${response} = 1 ]]
 then
     read -p "Enter path to repo on local disk. " path
 
@@ -37,9 +41,7 @@ then
         echo "The repo specified does not exist"
         exit 1
     fi
-
-elif [[ ${answer} = 0 ]]
-then
+else
     path="/mnt/backup"
     #Check if the share is mounted on /mnt/
     if [[ ! -d ${path} ]]
@@ -82,9 +84,6 @@ then
 elif [[ ${answer} = 0 ]]
 then
     name=${DATE}
-else
-    echo -e "\e[31mThe answer was not y or n"
-    exit 1
 fi
 
 #Check if an archive with the same name already exist in the repository
