@@ -42,6 +42,14 @@ then
         exit 1
     fi
 else
+    #Ask for auto mode
+    read -p "Enter 'y' to use the automatic mode: " auto
+    if [[ $auto == "y" ]]
+    then
+        ./createArchiveAuto.sh
+        exit 0
+    fi
+
     path="/mnt/backup"
     #Check if the share is mounted on /mnt/
     if [[ ! -d ${path} ]]
@@ -58,7 +66,7 @@ else
         elif [[ ${answer} = 0 ]]
         then
             #Calls script to mount samba share
-            ./mountsmb.sh
+           ./mountsmb.sh
 
             #Check if the operation was successfull
             if [[ ! -d ${path} ]]
