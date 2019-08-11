@@ -11,4 +11,3 @@ Mount a samba share on /mnt/
 
 ### unmountsmb.sh
 Unmount a samba share from /mnt/
-
