@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 if [[ -f ./backup.conf ]]
 then
     . ./backup.conf
@@ -38,6 +39,8 @@ fi
 
 #Check if the archive name is correct
 echo "The archive will be named : $DATE"
+
+name=${DATE}
 
 #Check if an archive with the same name already exist in the repository
 expression=$(sudo borg list ${path} | grep -w ${name})
