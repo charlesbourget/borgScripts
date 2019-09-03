@@ -22,7 +22,6 @@ function question {
     done
 }
 
-path="/mnt/backup"
 #Check if the share is mounted on /mnt/
 if [[ ! -d ${path} ]]
 then
@@ -60,7 +59,7 @@ echo
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-sudo borg create --progress ${path}::${name} ~/Documents ~/Pictures ~/Videos
+sudo borg create --progress --stats ${path}::${name} ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
