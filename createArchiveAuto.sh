@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
+CONF_LOCATION="./backup.conf"
 
-if [[ -f ./backup.conf ]]
+if [[ -f ${CONF_LOCATION} ]]
 then
-    . ./backup.conf
+    . ${CONF_LOCATION}
 fi
 
 #Get current date
@@ -73,5 +74,7 @@ echo
 #Check if a samba share is mounted
 if [[ ${path} = "/mnt/backup" ]]
 then
-    ./unmountsmb.sh
+    echo "Unmounting /mnt ..."
+
+    sudo umount /mnt
 fi
