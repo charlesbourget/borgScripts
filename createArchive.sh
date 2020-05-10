@@ -51,10 +51,20 @@ else
     fi
 
     path="/mnt/backup"
+
+    question "Is the borg repo located at ${path} ?"
+    answer=$?
+
+    if [[ ${answer} = 1 ]]
+    then
+	    read -p "Enter correct location: " path
+    fi
+	    
+
     #Check if the share is mounted on /mnt/
     if [[ ! -d ${path} ]]
     then
-        echo -e "\e[31mThe backup repo which is supposed to be on /mnt/backup does not exist."
+        echo -e "\e[31mThe backup repo which is supposed to be on ${path} does not exist."
         echo -e "\e[39mThis is caused by the share not being mounted or because the repo doesn't exist"
         question "Do you want to mount a samba share?"
         answer=$?
