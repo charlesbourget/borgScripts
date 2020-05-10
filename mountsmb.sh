@@ -2,8 +2,8 @@
 
 #Query the user about the share to mount
 read -p "Enter user to mount samba share as : " username
-read -p "Enter samba share address (ex: 192.168.0.119 or 192.168.0.170) : " address
-read -p "Enter samba share name (ex: share) : " share
+read -p "Enter samba share address : " address
+read -p "Enter samba share name : " share
 
 echo "The share will be mounted in /mnt/"
 echo "Mounting $address/$share as $username..."
