@@ -20,7 +20,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 cp createArchiveAuto.sh ${INSTALL_LOCATION}createArchiveAuto
 
-sed -i "s|CONF_LOCATION=\".*\"|CONF_LOCATION=\"$CONF_LOCATION\"|g" "${INSTALL_LOCATION}createArchiveAuto"
+sed -i "s|CONF_LOCATION=\".*\"|CONF_LOCATION=\"${CONF_LOCATION}backup.conf\"|g" "${INSTALL_LOCATION}createArchiveAuto"
 
 cp backup.conf ${CONF_LOCATION}backup.conf
 
