@@ -10,19 +10,6 @@ fi
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
 
-#Ask a Yes/No question to the user
-#Return 0 if the answer is Yes
-#Return 1 if the answer is No
-function question {
-    echo ${1}
-    select answer in "Yes" "No"; do
-        case $answer in
-            Yes ) return 0; break;;
-            No ) return 1;
-        esac
-    done
-}
-
 #Check if the share is mounted on /mnt/
 if [[ ! -d ${path} ]]
 then
