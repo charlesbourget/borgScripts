@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export BORG_PASSPHRASE=''
+
 CONF_LOCATION="./backup.conf"
 
 if [[ -f ${CONF_LOCATION} ]]
@@ -14,7 +16,7 @@ DATE="$(date +'%Y-%m-%d')"
 if [[ ! -d ${path} ]]
 then
 
-    sudo mount -t cifs -o username=$user "//$addr/$share" /mnt/
+    mount -t cifs -o username=$user "//$addr/$share" /mnt/
 
     #Check if the operation was successfull
     if [[ ! -d ${path} ]]
@@ -30,7 +32,7 @@ echo "The archive will be named : $DATE"
 name=${DATE}
 
 #Check if an archive with the same name already exist in the repository
-expression=$(sudo borg list ${path} | grep -w ${name})
+expression=$(borg list ${path} | grep -w ${name})
 
 if [[ -n "$expression" ]]
 then
@@ -47,7 +49,7 @@ echo
 #Get current time in seconds since UNIX EPOCH
 STARTTIME="$(date +%s)"
 
-sudo borg create --progress --stats ${path}::${name} ~/Documents ~/Pictures ~/Videos
+borg create --progress --stats ${path}::${name} ~/Documents ~/Pictures ~/Videos
 
 #Get current time in seconds since UNIX EPOCH
 ENDTIME="$(date +%s)"
@@ -63,5 +65,5 @@ if [[ ${path} = "/mnt/backup" ]]
 then
     echo "Unmounting /mnt ..."
 
-    sudo umount /mnt
+    umount /mnt
 fi
