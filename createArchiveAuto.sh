@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 #Load configuration from file
 CONF_LOCATION="./backup.conf"
 
@@ -9,7 +11,7 @@ then
 fi
 
 #Ping backup server to check if the address is valid
-ping -c 1 $addr || exit 1
+ping -c 1 ${addr}
 
 echo "Server address is valid and server is available"
 
@@ -20,18 +22,9 @@ export BORG_PASSPHRASE=${borg_passphrase}
 DATE="$(date +'%Y-%m-%d')"
 
 #Check if the share is mounted on /mnt/
-if [[ ! -d ${path} ]]
-then
+[ -d ${path} ] || (mount -t cifs -o username=$user "//$addr/$share" /mnt/ && [ -d ${path} ])
 
-    mount -t cifs -o username=$user "//$addr/$share" /mnt/
-
-    #Check if the operation was successfull
-    if [[ ! -d ${path} ]]
-    then
-        echo -e "\e[31mShare is still not mounted or repo doesn't exist"
-        exit 1
-    fi
-fi
+echo "Repo is available"
 
 #Check if the archive name is correct
 echo "The archive will be named : $DATE"
@@ -39,15 +32,9 @@ echo "The archive will be named : $DATE"
 name=${DATE}
 
 #Check if an archive with the same name already exist in the repository
-expression=$(borg list ${path} | grep -w ${name})
+borg list ${path} | grep -w ${name} && (echo -e "\e[31mArchive name is already in use"; exit 1)
 
-if [[ -n "$expression" ]]
-then
-    echo -e "\e[31mAn archive with this name already exist"
-    exit 1
-else
-    echo "Archive name is unused and valid"
-fi
+echo "Archive name is unused and valid"
 
 #Create the archive
 echo "Creating archive..."
@@ -67,10 +54,6 @@ echo "Backup successful!"
 echo "Backup took $(($ENDTIME - $STARTTIME))s"
 echo
 
-#Check if a samba share is mounted
-if [[ ${path} = "/mnt/backup" ]]
-then
-    echo "Unmounting /mnt ..."
+echo "Unmounting /mnt ..."
 
-    umount /mnt
-fi
+umount /mnt
