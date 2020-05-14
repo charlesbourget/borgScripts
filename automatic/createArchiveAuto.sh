@@ -18,6 +18,8 @@ echo "Server address is valid and server is available"
 #Add repo passphrase to env variable
 export BORG_PASSPHRASE=${borg_passphrase}
 
+export PASSWD=''
+
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
 
