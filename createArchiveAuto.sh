@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-export BORG_PASSPHRASE=''
-
 CONF_LOCATION="./backup.conf"
 
 if [[ -f ${CONF_LOCATION} ]]
 then
     . ${CONF_LOCATION}
 fi
+
+export BORG_PASSPHRASE=${borg_passphrase}
 
 #Get current date
 DATE="$(date +'%Y-%m-%d')"
