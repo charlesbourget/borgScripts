@@ -8,6 +8,11 @@ then
     . ${CONF_LOCATION}
 fi
 
+#Ping backup server to check if the address is valid
+ping -c 1 $addr || exit 1
+
+echo "Server address is valid and server is available"
+
 #Add repo passphrase to env variable
 export BORG_PASSPHRASE=${borg_passphrase}
 
