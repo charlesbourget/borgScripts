@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 INSTALL_LOCATION="${HOME}/.local/bin/"
 CONF_LOCATION="${HOME}/.config/borgScript/"
 
