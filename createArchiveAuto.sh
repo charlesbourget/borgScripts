@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Load configuration from file
 CONF_LOCATION="./backup.conf"
 
 if [[ -f ${CONF_LOCATION} ]]
@@ -7,6 +8,7 @@ then
     . ${CONF_LOCATION}
 fi
 
+#Add repo passphrase to env variable
 export BORG_PASSPHRASE=${borg_passphrase}
 
 #Get current date
